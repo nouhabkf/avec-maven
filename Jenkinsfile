@@ -2,33 +2,32 @@ pipeline {
     agent any
 
     tools {
-        jdk 'JAVA_HOME'
-        maven 'M2_HOME'
+        jdk 'JDK17'      // Nom exact de ton JDK configuré
+        maven 'Maven'    // Nom exact de ton Maven configuré
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/nouhabkf/avec-maven.git', branch: 'main'
-                // si repo privé, ajouter : credentialsId: 'ID_CREDENTIAL'
+                git url: 'https://github.com/nouhabkf/avec-maven.git', branch: 'main', credentialsId: 'ID_CREDENTIAL'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'mvn clean install'
+                sh 'mvn clean install'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'mvn test'
+                sh 'mvn test'
             }
         }
 
         stage('Package') {
             steps {
-                bat 'mvn package'
+                sh 'mvn package'
             }
         }
     }
