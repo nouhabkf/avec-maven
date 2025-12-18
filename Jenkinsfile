@@ -1,28 +1,34 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'JAVA_HOME'
+        maven 'M2_HOME'
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/nouhabkf/avec-maven.git', branch: 'main', credentialsId: 'ID_CREDENTIAL'
+                git url: 'https://github.com/nouhabkf/avec-maven.git', branch: 'main'
+                // si repo privé, ajouter : credentialsId: 'ID_CREDENTIAL'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                bat 'mvn clean install'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
         stage('Package') {
             steps {
-                sh 'mvn package'
+                bat 'mvn package'
             }
         }
     }
